@@ -61,6 +61,7 @@ export type Database = {
       }
       recipes: {
         Row: {
+          category: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes: number
           difficulty: Database["public"]["Enums"]["RecipeDifficulty"]
           id: string
@@ -74,6 +75,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          category?: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes: number
           difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
@@ -87,6 +89,7 @@ export type Database = {
           title: string
         }
         Update: {
+          category?: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes?: number
           difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
@@ -172,6 +175,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      RecipeCategory:
+        | "Browse"
+        | "Friends"
+        | "Kids"
+        | "TikTok"
+        | "Challenge"
+        | "ThreeBites"
+        | "Sweets"
       RecipeDifficulty: "Easy" | "Medium" | "Hard"
       Restriction: "Nut-Free" | "Vegan" | "Vegetarian" | "Gluten-Free" | "None"
       StoryTone:
@@ -308,6 +319,15 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      RecipeCategory: [
+        "Browse",
+        "Friends",
+        "Kids",
+        "TikTok",
+        "Challenge",
+        "ThreeBites",
+        "Sweets",
+      ],
       RecipeDifficulty: ["Easy", "Medium", "Hard"],
       Restriction: ["Nut-Free", "Vegan", "Vegetarian", "Gluten-Free", "None"],
       StoryTone: [

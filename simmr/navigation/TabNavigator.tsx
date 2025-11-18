@@ -1,8 +1,9 @@
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ExploreScreen } from "@/screens/Explore";
 import { ChatScreen } from "@/screens/Chat";
 import { FriendsScreen } from "@/screens/Friends";
-import { PantryScreen } from "@/screens/Pantry";
+import { ProfileScreen } from "@/screens/Profile";
 import { StoryLogScreen } from "@/screens/StoryLog";
 import {
   MaterialIcons,
@@ -25,6 +26,7 @@ export const TabNavigator = () => {
         name="Explore"
         component={ExploreScreen}
         options={{
+          headerShown: false,          
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="explore" color={color} size={size} />
           ),
@@ -58,11 +60,11 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Pantry"
-        component={PantryScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="door-sliding" color={color} size={size} />
+            <Ionicons name="person" color={color} size={size} fill={color} />
           ),
         }}
       />

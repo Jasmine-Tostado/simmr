@@ -19,7 +19,7 @@ export const RecipeDetails = () => {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <FontAwesome6
           name="chevron-left"
-          size={24}
+          size={Theme.sizes.largeIcon}
           color={Theme.colors.primary}
         />
       </TouchableOpacity>

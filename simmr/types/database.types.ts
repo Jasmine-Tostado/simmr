@@ -61,40 +61,43 @@ export type Database = {
       }
       recipes: {
         Row: {
-          cook_time_minutes: number | null
-          created_at: string
+          cook_time_minutes: number
+          difficulty: Database["public"]["Enums"]["RecipeDifficulty"]
           id: string
           image_url: string
           ingredients: string[]
-          instructions: string
-          num_servings: number
-          story_theme: string
+          instructions: string | null
+          kid_friendly: boolean
+          num_servings: string
+          restriction: Database["public"]["Enums"]["Restriction"] | null
+          story_tone: Database["public"]["Enums"]["StoryTone"]
           title: string
-          updated_at: string
         }
         Insert: {
-          cook_time_minutes?: number | null
-          created_at?: string
+          cook_time_minutes: number
+          difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
           image_url: string
           ingredients: string[]
-          instructions: string
-          num_servings: number
-          story_theme: string
+          instructions?: string | null
+          kid_friendly: boolean
+          num_servings: string
+          restriction?: Database["public"]["Enums"]["Restriction"] | null
+          story_tone?: Database["public"]["Enums"]["StoryTone"]
           title: string
-          updated_at?: string
         }
         Update: {
-          cook_time_minutes?: number | null
-          created_at?: string
+          cook_time_minutes?: number
+          difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
           image_url?: string
           ingredients?: string[]
-          instructions?: string
-          num_servings?: number
-          story_theme?: string
+          instructions?: string | null
+          kid_friendly?: boolean
+          num_servings?: string
+          restriction?: Database["public"]["Enums"]["Restriction"] | null
+          story_tone?: Database["public"]["Enums"]["StoryTone"]
           title?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -169,7 +172,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      RecipeDifficulty: "Easy" | "Medium" | "Hard"
+      Restriction: "Nut-Free" | "Vegan" | "Vegetarian" | "Gluten-Free" | "None"
+      StoryTone:
+        | "Cozy"
+        | "Romantic"
+        | "Adventure"
+        | "Educational"
+        | "Mystery"
+        | "Humorous"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -296,6 +307,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      RecipeDifficulty: ["Easy", "Medium", "Hard"],
+      Restriction: ["Nut-Free", "Vegan", "Vegetarian", "Gluten-Free", "None"],
+      StoryTone: [
+        "Cozy",
+        "Romantic",
+        "Adventure",
+        "Educational",
+        "Mystery",
+        "Humorous",
+      ],
+    },
   },
 } as const

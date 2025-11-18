@@ -58,7 +58,11 @@ export const RecipesList = () => {
       >
         <SectionHeader
           title="Recipes for you"
-          onPress={() => navigation.navigate("BrowseRecipes")}
+          onPress={() =>
+            navigation.navigate("BrowseRecipes", {
+              recipes: recommendedRecipes,
+            })
+          }
         />
         <RecipesCarousel
           data={recommendedRecipes}
@@ -67,7 +71,9 @@ export const RecipesList = () => {
 
         <SectionHeader
           title="Cooking with kids"
-          onPress={() => navigation.navigate("BrowseRecipes")}
+          onPress={() =>
+            navigation.navigate("BrowseRecipes", { recipes: kidsRecipes })
+          }
         />
         <RecipesCarousel
           data={kidsRecipes}
@@ -76,7 +82,9 @@ export const RecipesList = () => {
 
         <SectionHeader
           title="Cooking with friends"
-          onPress={() => navigation.navigate("BrowseRecipes")}
+          onPress={() =>
+            navigation.navigate("BrowseRecipes", { recipes: friendsRecipes })
+          }
         />
         <RecipesCarousel
           data={friendsRecipes}
@@ -98,7 +106,7 @@ const SectionHeader = ({
     <Text style={styles.sectionTitle}>{title}</Text>
     <FontAwesome6
       name="chevron-right"
-      size={16}
+      size={Theme.sizes.smallIcon}
       color={Theme.colors.primary}
       style={styles.chevronIcon}
     />

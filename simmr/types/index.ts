@@ -8,9 +8,14 @@ export type CookingSessionsSelect = Database["public"]["Tables"]["cooking_sessio
 export type StoryLogsInsert = Database["public"]["Tables"]["story_logs"]["Insert"];
 export type StoryLogsSelect = Database["public"]["Tables"]["story_logs"]["Row"];
 
+export type RecipeCategory = Database["public"]["Enums"]["RecipeCategory"];
+export type RecipeDifficulty = Database["public"]["Enums"]["RecipeDifficulty"];
+export type Restriction = Database["public"]["Enums"]["Restriction"];
+export type StoryTone = Database["public"]["Enums"]["StoryTone"];
+
 export type ExploreStackParamList = {
   ExploreTabs: undefined;
-  BrowseRecipes: undefined;
+  BrowseRecipes: { recipes: RecipesSelect[] };
   RecipeDetails: { recipe: RecipesSelect };
   VoiceAI:  { recipe: RecipesSelect };
 };

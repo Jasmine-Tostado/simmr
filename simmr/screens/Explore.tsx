@@ -36,7 +36,7 @@ const ExploreTabs = () => {
 
 export const ExploreScreen = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <Stack.Navigator>
         <Stack.Screen
           name="ExploreTabs"
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Theme.colors.primary,
   },
-  recipeFlatList: {},
   recipeCard: {
     padding: 10,
   },

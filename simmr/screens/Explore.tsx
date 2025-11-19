@@ -10,6 +10,8 @@ import { RecipesList } from "@/components/RecipesList";
 import { Pantry } from "@/components/Pantry";
 import { BrowseRecipes } from "@/components/BrowseRecipes";
 import { RecipeDetails } from "@/components/RecipeDetails";
+import { VoiceSummary } from "@/components/VoiceSummary"; // adjust path if needed
+import { StoryToneSelection } from "@/components/StoryToneSelection";
 
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator<ExploreStackParamList>();
@@ -56,6 +58,16 @@ export const ExploreScreen = () => {
         <Stack.Screen
           name="VoiceAI"
           component={VoiceAI}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="VoiceSummary" 
+          component={VoiceSummary} 
+          options={{ headerShown: false }}
+          />
+        <Stack.Screen
+          name="StoryToneSelection"
+          component={StoryToneSelection}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

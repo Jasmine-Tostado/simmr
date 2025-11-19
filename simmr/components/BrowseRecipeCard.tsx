@@ -1,19 +1,27 @@
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RecipesSelect } from "@/types";
 import Theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ExploreStackParamList } from "@/types";
 import { StoryToneTag } from "./StoryToneTag";
 import { RecipeTime } from "./RecipeTime";
 
 export const BrowseRecipeCard = ({ recipe }: { recipe: RecipesSelect }) => {
+  const navigation =
+    useNavigation<StackNavigationProp<ExploreStackParamList>>();
+
   // Show up to 5 ingredients, then "..." if there are more
   const maxVisibleIngredients = 4;
   const visibleIngredients = recipe.ingredients.slice(0, maxVisibleIngredients);
   const hasMoreIngredients = recipe.ingredients.length > maxVisibleIngredients;
 
   return (
-    <View style={styles.recipeCard}>
+    <TouchableOpacity
+      style={styles.recipeCard}
+      onPress={() => navigation.navigate("RecipeDetails", { recipe })}
+    >
       <View style={styles.recipeImageContainer}>
         <Image source={{ uri: recipe.image_url }} style={styles.recipeImage} />
         <View style={styles.ingredientsContainer}>
@@ -50,7 +58,7 @@ export const BrowseRecipeCard = ({ recipe }: { recipe: RecipesSelect }) => {
           <StoryToneTag storyTone={recipe.story_tone} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

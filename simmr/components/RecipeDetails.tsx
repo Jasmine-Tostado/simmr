@@ -12,6 +12,8 @@ import Theme from "@/theme";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ExploreStackParamList, RecipesSelect } from "@/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StoryToneTag } from "@/components/StoryToneTag";
+import { StoryTone } from "@/types";
 
 type NavigationProp = StackNavigationProp<ExploreStackParamList>;
 
@@ -30,7 +32,6 @@ export const RecipeDetails = () => {
     ingredients,
   } = recipe;
 
-  const educational = (recipe as any).educational ?? false;
   const description = (recipe as any).description ?? "";
 
   const list = Array.isArray(ingredients) ? ingredients : [];
@@ -42,21 +43,20 @@ export const RecipeDetails = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <FontAwesome6
-            name="chevron-left"
-            size={22}
-            color={Theme.colors.primary}
-          />
-        </TouchableOpacity>
+<ScrollView showsVerticalScrollIndicator={false}>
+  <View style={styles.header}>
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.backButton}
+    >
+      <FontAwesome6 name="chevron-left" size={22} color={Theme.colors.primary} />
+    </TouchableOpacity>
+    <View style={styles.headerTitleContainer}>
+      <Text style={styles.headerTitle}>Recipe Details</Text>
+    </View>
+  </View>
 
-        <Text style={styles.pageHeader}>Recipe Details</Text>
-
-        <View style={styles.imageWrapper}>
+  <View style={styles.imageWrapper}>
           <Image
             source={{ uri: image_url }}
             style={styles.headerImage}
@@ -86,15 +86,13 @@ export const RecipeDetails = () => {
         </View>
 
         <View style={styles.tagRow}>
+          <StoryToneTag storyTone={story_tone} />
           {kid_friendly && (
-            <View style={styles.tagChip}>
-              <Text style={styles.tagText}>Cozy</Text>
-            </View>
-          )}
-          {educational && (
-            <View style={styles.tagChip}>
-              <Text style={styles.tagText}>Educational</Text>
-            </View>
+            <StoryToneTag
+              storyTone="Kid-Friendly"
+              color={Theme.colors.primary}
+              textColor={Theme.colors.textSecondary}
+            />
           )}
         </View>
 
@@ -103,7 +101,19 @@ export const RecipeDetails = () => {
         <View style={styles.storyBox}>
           <Text style={styles.storyText}>{story_tone}</Text>
 
-          <TouchableOpacity style={{ marginTop: 8 }}>
+          <TouchableOpacity
+            style={{ marginTop: 8 }}
+            onPress={() =>
+              navigation.navigate("StoryToneSelection", {
+                storyTone: story_tone,
+                onSaveToneSelection: (newStoryTone: StoryTone) => {
+                  // TODO: Update the story tone for the voice AI
+                  navigation.goBack();
+                },
+                buttonText: "Save",
+              })
+            }
+          >
             <Text style={styles.changeTone}>Change tone →</Text>
           </TouchableOpacity>
         </View>
@@ -168,32 +178,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Theme.colors.background,
   },
-
-  backButton: {
-    position: "absolute",
-    top: 52,
-    left: 18,
-    zIndex: 20,
-    backgroundColor: "#ffffffcc",
-    padding: 8,
-    borderRadius: 20,
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-
-  pageHeader: {
-    fontSize: 26,
+  headerTitleContainer: {
+    alignItems: "center",
+    marginTop: 10,
+  },
+  headerTitle: {
+    fontSize: Theme.sizes.headerTitle,
     fontWeight: "700",
     textAlign: "center",
-    marginTop: 12,
-    marginBottom: 8,
     color: Theme.colors.primary,
   },
-
+  backButton: {
+    padding: 8,
+    marginTop: 8,
+    marginLeft: 16,
+  },
   imageWrapper: {
     width: "100%",
     paddingHorizontal: 16,
-    marginTop: 8,
   },
-
   headerImage: {
     width: "100%",
     height: 240,

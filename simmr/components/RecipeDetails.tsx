@@ -43,7 +43,6 @@ export const RecipeDetails = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
@@ -80,13 +79,10 @@ export const RecipeDetails = () => {
             <Text style={styles.metaText}>{num_servings} servings</Text>
           </View>
 
-          
           <View style={styles.metaItem}>
-  <MaterialCommunityIcons name="chef-hat" size={16} color="#444" />
-  <Text style={styles.metaText}>Easy</Text>
-</View>
-
-          
+            <MaterialCommunityIcons name="chef-hat" size={16} color="#444" />
+            <Text style={styles.metaText}>Easy</Text>
+          </View>
         </View>
 
         <View style={styles.tagRow}>
@@ -134,33 +130,34 @@ export const RecipeDetails = () => {
           </View>
         </View>
 
-<Text style={styles.sectionTitle}>Ingredients</Text>
+        <Text style={styles.sectionTitle}>Ingredients</Text>
 
-<View style={styles.ingredientsList}>
-  {list.map((item, i) => {
+        <View style={styles.ingredientsList}>
+          {list.map((item, i) => {
+            if (typeof item === "string") {
+              const [name, amount] = item.split(":");
+              return (
+                <View key={i} style={styles.ingredientRow}>
+                  <Text style={styles.ingredientName}>{name?.trim()}</Text>
+                  <Text style={styles.ingredientQty}>
+                    {amount?.trim() || ""}
+                  </Text>
+                </View>
+              );
+            }
 
-    if (typeof item === "string") {
-      const [name, amount] = item.split(":");
-      return (
-        <View key={i} style={styles.ingredientRow}>
-          <Text style={styles.ingredientName}>{name?.trim()}</Text>
-          <Text style={styles.ingredientQty}>{amount?.trim() || ""}</Text>
+            const ing = item as any;
+
+            return (
+              <View key={i} style={styles.ingredientRow}>
+                <Text style={styles.ingredientName}>{ing.name}</Text>
+                <Text style={styles.ingredientQty}>{ing.amount}</Text>
+              </View>
+            );
+          })}
         </View>
-      );
-    }
 
-    const ing = item as any;
-
-    return (
-      <View key={i} style={styles.ingredientRow}>
-        <Text style={styles.ingredientName}>{ing.name}</Text>
-        <Text style={styles.ingredientQty}>{ing.amount}</Text>
-      </View>
-    );
-  })}
-</View>
-
-<View style={{ height: 40 }} />
+        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );
@@ -347,34 +344,33 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.primary,
   },
 
-   ingredientsList: {
-  paddingHorizontal: 16,
-  gap: 12,
-},
+  ingredientsList: {
+    paddingHorizontal: 16,
+    gap: 12,
+  },
 
-ingredientRow: {
-  backgroundColor: "#faefe6",
-  paddingVertical: 14,
-  paddingHorizontal: 16,
-  borderRadius: 12,
-  borderWidth: 1,
-  borderColor: "#e2d2c7",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-},
+  ingredientRow: {
+    backgroundColor: "#faefe6",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#e2d2c7",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 
-ingredientName: {
-  fontSize: 15,
-  fontWeight: "600",
-  flexShrink: 1,
-  color: "#3b2b25",
-},
+  ingredientName: {
+    fontSize: 15,
+    fontWeight: "600",
+    flexShrink: 1,
+    color: "#3b2b25",
+  },
 
-ingredientQty: {
-  fontSize: 15,
-  fontWeight: "400",
-  color: "#3b2b25",
-},
-
+  ingredientQty: {
+    fontSize: 15,
+    fontWeight: "400",
+    color: "#3b2b25",
+  },
 });

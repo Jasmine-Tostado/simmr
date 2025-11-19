@@ -11,10 +11,10 @@ export const Theme = {
     disabledButton: "#D9D9D9",
   },
   sizes: {
-    headerTitle: 24,
     smallText: 16,
     mediumText: 20,
     largeText: 24,
+    headerTitle: 26,
     tinyIcon: 8,
     smallIcon: 16,
     mediumIcon: 22,

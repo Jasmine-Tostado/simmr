@@ -1,23 +1,38 @@
 import { View, Text, StyleSheet } from "react-native";
 import Theme from "../theme";
 
-export const StoryToneTag = ({ storyTone }: { storyTone: string }) => {
+type StoryToneTagProps = {
+  storyTone: string;
+  color?: string;
+  textColor?: string;
+};
+export const StoryToneTag = ({
+  storyTone,
+  color,
+  textColor,
+}: StoryToneTagProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{storyTone}</Text>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: color || Theme.colors.inputBackground },
+      ]}
+    >
+      <Text style={[styles.text, { color: textColor || Theme.colors.text }]}>
+        {storyTone}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
-    borderRadius: 10,
-    backgroundColor: Theme.colors.inputBackground,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 15,
   },
   text: {
     fontSize: Theme.sizes.smallText,
-    color: Theme.colors.text,
-    fontWeight: "bold",
+    fontWeight: "600",
   },
 });

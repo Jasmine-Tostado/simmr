@@ -11,6 +11,7 @@ import { Pantry } from "@/components/Pantry";
 import { BrowseRecipes } from "@/components/BrowseRecipes";
 import { RecipeDetails } from "@/components/RecipeDetails";
 import { VoiceSummary } from "@/components/VoiceSummary"; // adjust path if needed
+import { StoryToneSelection } from "@/components/StoryToneSelection";
 
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator<ExploreStackParamList>();
@@ -64,6 +65,11 @@ export const ExploreScreen = () => {
           component={VoiceSummary} 
           options={{ headerShown: false }}
           />
+        <Stack.Screen
+          name="StoryToneSelection"
+          component={StoryToneSelection}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </SafeAreaView>
   );

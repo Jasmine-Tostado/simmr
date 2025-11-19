@@ -57,7 +57,8 @@ const VOICE_STEPS = [
 ];
 
 export const VoiceAI = () => {
-  const navigation = useNavigation();
+ // const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const { recipe } = route.params as { recipe: RecipesSelect };
 
@@ -96,6 +97,10 @@ export const VoiceAI = () => {
     } else {
       navigation.goBack(); // last step
     }
+  };
+
+  const handleDone = () => {
+    navigation.navigate("VoiceSummary", { recipe });
   };
 
   const handlePrev = () => {
@@ -216,7 +221,7 @@ export const VoiceAI = () => {
 
       {/* Bottom: pause OR Done button */}
       {isLast ? (
-        <TouchableOpacity style={styles.doneButton} onPress={handleNext}>
+        <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
           <Text style={styles.doneButtonText}>Done!</Text>
         </TouchableOpacity>
       ) : (

@@ -5,7 +5,7 @@ import { ExploreScreen } from "@/screens/Explore";
 import { ChatScreen } from "@/screens/Chat";
 import { FriendsScreen } from "@/screens/Friends";
 import { ProfileScreen } from "@/screens/Profile";
-import { StoryLogScreen } from "@/screens/StoryLog";
+import { StoryLog as StoryLogScreen } from "@/screens/StoryLog";
 import {
   MaterialIcons,
   Ionicons,

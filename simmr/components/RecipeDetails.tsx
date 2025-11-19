@@ -44,7 +44,6 @@ export const RecipeDetails = () => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
 
-        {/* Back Arrow */}
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
@@ -56,10 +55,8 @@ export const RecipeDetails = () => {
           />
         </TouchableOpacity>
 
-        {/* Page Header */}
         <Text style={styles.pageHeader}>Recipe Details</Text>
 
-        {/* Image Wrapper */}
         <View style={styles.imageWrapper}>
           <Image
             source={{ uri: image_url }}
@@ -68,13 +65,10 @@ export const RecipeDetails = () => {
           />
         </View>
 
-        {/* Title */}
         <Text style={styles.title}>{title}</Text>
 
-        {/* Description */}
         <Text style={styles.description}>{description}</Text>
 
-        {/* Meta Row */}
         <View style={styles.metaRow}>
           <View style={styles.metaItem}>
             <FontAwesome6 name="clock" size={14} color="#444" />
@@ -95,7 +89,6 @@ export const RecipeDetails = () => {
           
         </View>
 
-        {/* Tags */}
         <View style={styles.tagRow}>
           {kid_friendly && (
             <View style={styles.tagChip}>
@@ -109,7 +102,6 @@ export const RecipeDetails = () => {
           )}
         </View>
 
-        {/* Story Tone */}
         <Text style={styles.sectionTitle}>Story Tone</Text>
 
         <View style={styles.storyBox}>
@@ -120,7 +112,6 @@ export const RecipeDetails = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Start Cooking */}
         <TouchableOpacity
           style={styles.startButton}
           onPress={() => navigation.navigate("VoiceAI", { recipe })}
@@ -128,10 +119,8 @@ export const RecipeDetails = () => {
           <Text style={styles.startButtonText}>Start Cooking</Text>
         </TouchableOpacity>
 
-        {/* Divider */}
         <View style={styles.squaredDivider} />
 
-        {/* Ingredient Progress */}
         <View style={styles.progressCard}>
           <View style={styles.progressHeader}>
             <Text style={styles.progressLabel}>
@@ -145,12 +134,11 @@ export const RecipeDetails = () => {
           </View>
         </View>
 
-        {/* Ingredients */}
 <Text style={styles.sectionTitle}>Ingredients</Text>
 
 <View style={styles.ingredientsList}>
   {list.map((item, i) => {
-    // Case 1: ingredient is a plain string like "Scallops:1 lb"
+
     if (typeof item === "string") {
       const [name, amount] = item.split(":");
       return (
@@ -161,7 +149,6 @@ export const RecipeDetails = () => {
       );
     }
 
-    // Case 2: ingredient is an object { name, amount }
     const ing = item as any;
 
     return (
@@ -178,9 +165,6 @@ export const RecipeDetails = () => {
     </View>
   );
 };
-
-
-/* ----------------------------- STYLES ----------------------------- */
 
 const styles = StyleSheet.create({
   container: {

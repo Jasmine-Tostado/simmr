@@ -93,27 +93,30 @@ const styles = StyleSheet.create({
     height: 150,
   },
   bulletPoint: {
-    marginTop: 6,
+    marginTop: 8,
   },
   ingredientText: {
     fontSize: Theme.sizes.smallText,
     color: Theme.colors.text,
     marginBottom: 4,
+    fontFamily: "Afacad",
   },
   ellipsisText: {
     fontSize: Theme.sizes.smallText,
     color: Theme.colors.text,
+    fontFamily: "Afacad",
   },
   recipeTitle: {
-    fontSize: Theme.sizes.smallText,
+    fontSize: Theme.sizes.largeText,
     fontWeight: "bold",
     color: Theme.colors.text,
+    fontFamily: "Afacad",
   },
   recipeInfoContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 5,
+    marginTop: 4,
   },
   recipeTagsContainer: {
     flexDirection: "row",

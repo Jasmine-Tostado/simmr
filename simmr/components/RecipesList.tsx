@@ -108,7 +108,6 @@ const SectionHeader = ({
       name="chevron-right"
       size={Theme.sizes.smallIcon}
       color={Theme.colors.primary}
-      style={styles.chevronIcon}
     />
   </TouchableOpacity>
 );
@@ -197,14 +196,12 @@ const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    fontSize: 22,
+    fontSize: Theme.sizes.largeText,
     fontWeight: "600",
     lineHeight: 28,
+    fontFamily: "Afacad",
   },
 
-  chevronIcon: {
-    marginTop: 4,
-  },
   emptyText: {
     paddingHorizontal: 16,
     paddingBottom: 12,
@@ -231,9 +228,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   recipeTitle: {
-    fontSize: 16,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "600",
     marginBottom: 4,
+    fontFamily: "Afacad",
   },
   recipeMetaRow: {
     flexDirection: "row",
@@ -241,8 +239,9 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   metaText: {
-    fontSize: 12,
-    color: "#2c2828ff",
+    fontSize: Theme.sizes.smallText,
+    color: Theme.colors.accentGray,
+    fontFamily: "Afacad",
   },
   metaDot: {
     width: 4,
@@ -263,6 +262,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1e6df",
   },
   badgeText: {
-    fontSize: 11,
+    fontSize: Theme.sizes.smallText,
+    fontFamily: "Afacad",
   },
 });

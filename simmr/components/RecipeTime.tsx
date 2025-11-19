@@ -25,5 +25,6 @@ const styles = StyleSheet.create({
     fontSize: Theme.sizes.smallText,
     color: Theme.colors.inputDefaultText,
     fontWeight: "bold",
+    fontFamily: "Afacad",
   },
 });

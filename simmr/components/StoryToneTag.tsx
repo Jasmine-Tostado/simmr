@@ -27,12 +27,13 @@ export const StoryToneTag = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 4,
+    paddingVertical: 3,
     paddingHorizontal: 8,
-    borderRadius: 15,
+    borderRadius: 10,
   },
   text: {
     fontSize: Theme.sizes.smallText,
     fontWeight: "600",
+    fontFamily: "Afacad",
   },
 });

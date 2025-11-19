@@ -151,9 +151,10 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   customTitle: {
-    fontSize: 18,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "600",
     marginBottom: 12,
+    fontFamily: "Afacad",
   },
   customRow: {
     flexDirection: "row",
@@ -166,6 +167,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 12,
     backgroundColor: "#f4f4f4",
+    fontFamily: "Afacad",
+    fontSize: Theme.sizes.smallText,
   },
   addButton: {
     height: 44,
@@ -176,13 +179,16 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.primary,
   },
   addButtonText: {
-    color: "#fff",
+    color: Theme.colors.textSecondary,
     fontWeight: "600",
+    fontFamily: "Afacad",
+    fontSize: Theme.sizes.smallText,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "600",
     marginBottom: 8,
+    fontFamily: "Afacad",
   },
   chipContainer: {
     flexDirection: "row",
@@ -199,13 +205,16 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.primary,
   },
   myChipText: {
-    color: "#fff",
+    color: Theme.colors.textSecondary,
     fontWeight: "500",
     marginRight: 6,
+    fontFamily: "Afacad", 
+    fontSize: Theme.sizes.tinyText,
   },
   myChipRemove: {
-    color: "#fff",
-    fontSize: 14,
+      color: Theme.colors.textSecondary,
+    fontSize: Theme.sizes.tinyText,
+    fontFamily: "Afacad",
   },
   commonChip: {
     flexDirection: "row",
@@ -215,10 +224,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1,
     borderColor: Theme.colors.primary,
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.background,
   },
   commonChipText: {
-    fontSize: 14,
+    fontSize: Theme.sizes.tinyText,
+    fontFamily: "Afacad",
     marginRight: 4,
   },
   plus: {

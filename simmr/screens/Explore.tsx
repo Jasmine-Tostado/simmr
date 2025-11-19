@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -26,6 +26,10 @@ const ExploreTabs = () => {
         screenOptions={{
           tabBarIndicatorStyle: {
             backgroundColor: Theme.colors.primary,
+          },
+          tabBarLabelStyle: {
+            fontFamily: "Afacad",
+            fontSize: Theme.sizes.smallIcon,
           },
         }}
       >
@@ -60,11 +64,11 @@ export const ExploreScreen = () => {
           component={VoiceAI}
           options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="VoiceSummary" 
-          component={VoiceSummary} 
+        <Stack.Screen
+          name="VoiceSummary"
+          component={VoiceSummary}
           options={{ headerShown: false }}
-          />
+        />
         <Stack.Screen
           name="StoryToneSelection"
           component={StoryToneSelection}
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: Theme.colors.primary,
+    fontFamily: "Agbalumo",
   },
   recipeCard: {
     padding: 10,

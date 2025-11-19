@@ -29,22 +29,26 @@ export const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: Theme.colors.primary,
+        tabBarLabelStyle: {
+          fontFamily: "Afacad",
+          fontSize: Theme.sizes.tinyText,
+        },
       }}
     >
       <Tab.Screen
         name="Explore"
         component={ExploreScreen}
         options={({ route }) => {
-          const routeName = getFocusedRouteNameFromRoute(route) ?? "ExploreTabs";
+          const routeName =
+            getFocusedRouteNameFromRoute(route) ?? "ExploreTabs";
           return {
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="explore" color={color} size={size} />
+              <MaterialIcons name="explore" color={color} size={size + 3} />
             ),
-            tabBarStyle:
-              HIDE_TAB_BAR_ROUTES.includes(routeName)
-                ? { display: "none" }
-                : undefined,
+            tabBarStyle: HIDE_TAB_BAR_ROUTES.includes(routeName)
+              ? { display: "none" }
+              : undefined,
           };
         }}
       />

@@ -26,4 +26,5 @@ export type ExploreStackParamList = {
   BrowseRecipes: { recipes: RecipesSelect[] };
   RecipeDetails: { recipe: RecipesSelect };
   VoiceAI: { recipe: RecipesSelect };
+  VoiceSummary: { recipe: RecipesSelect };
 };

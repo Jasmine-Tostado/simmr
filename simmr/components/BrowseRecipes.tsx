@@ -135,8 +135,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   headerTitle: {
-    fontSize: Theme.sizes.mediumText,
+    fontSize: Theme.sizes.headerTitle,
     fontWeight: "bold",
+    fontFamily: "Afacad",
   },
   searchBarContainer: {
     borderWidth: 1,
@@ -152,6 +153,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: Theme.sizes.smallText,
     color: Theme.colors.text,
+    fontFamily: "Afacad",
   },
   searchButton: {
     backgroundColor: Theme.colors.primary,
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
     alignSelf: "center",
+    fontFamily: "Afacad",
   },
   startChatButton: {
     flexDirection: "row",
@@ -177,9 +180,10 @@ const styles = StyleSheet.create({
   },
   startChatButtonText: {
     color: Theme.colors.textSecondary,
-    fontSize: 16,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "Afacad",
   },
   scrollView: {
     flex: 1,

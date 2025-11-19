@@ -43,20 +43,24 @@ export const RecipeDetails = () => {
 
   return (
     <View style={styles.container}>
-<ScrollView showsVerticalScrollIndicator={false}>
-  <View style={styles.header}>
-    <TouchableOpacity
-      onPress={() => navigation.goBack()}
-      style={styles.backButton}
-    >
-      <FontAwesome6 name="chevron-left" size={22} color={Theme.colors.primary} />
-    </TouchableOpacity>
-    <View style={styles.headerTitleContainer}>
-      <Text style={styles.headerTitle}>Recipe Details</Text>
-    </View>
-  </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <FontAwesome6
+              name="chevron-left"
+              size={22}
+              color={Theme.colors.primary}
+            />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <Text style={styles.headerTitle}>Recipe Details</Text>
+          </View>
+        </View>
 
-  <View style={styles.imageWrapper}>
+        <View style={styles.imageWrapper}>
           <Image
             source={{ uri: image_url }}
             style={styles.headerImage}
@@ -184,13 +188,12 @@ const styles = StyleSheet.create({
   },
   headerTitleContainer: {
     alignItems: "center",
-    marginTop: 10,
   },
   headerTitle: {
     fontSize: Theme.sizes.headerTitle,
-    fontWeight: "700",
     textAlign: "center",
     color: Theme.colors.primary,
+    fontFamily: "Agbalumo",
   },
   backButton: {
     padding: 8,
@@ -208,19 +211,20 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 28,
+    fontSize: Theme.sizes.headerTitle,
     fontWeight: "700",
     paddingHorizontal: 16,
     color: Theme.colors.primary,
-    marginTop: 14,
     marginBottom: 4,
+    fontFamily: "Agbalumo",
   },
 
   description: {
-    fontSize: 15,
+    fontSize: Theme.sizes.mediumText,
     paddingHorizontal: 16,
-    color: "#444",
-    marginBottom: 18,
+    color: Theme.colors.text,
+    marginBottom: 10,
+    fontFamily: "Afacad",
   },
 
   metaRow: {
@@ -237,8 +241,9 @@ const styles = StyleSheet.create({
   },
 
   metaText: {
-    fontSize: 14,
-    color: "#444",
+    fontSize: Theme.sizes.smallText,
+    fontFamily: "Afacad",
+    color: Theme.colors.accentGray,
   },
 
   tagRow: {
@@ -248,24 +253,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  tagChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    backgroundColor: "#e7e4e4",
-    borderRadius: 999,
-  },
-
-  tagText: {
-    fontSize: 14,
-    color: "#444",
-  },
-
   sectionTitle: {
-    fontSize: 18,
+    fontSize: Theme.sizes.largeText,
     fontWeight: "600",
     paddingHorizontal: 16,
     marginBottom: 8,
     color: Theme.colors.primary,
+    fontFamily: "Afacad",
   },
 
   storyBox: {
@@ -278,13 +272,15 @@ const styles = StyleSheet.create({
   },
 
   storyText: {
-    fontSize: 15,
-    color: "#5a3833",
+    fontSize: Theme.sizes.mediumText,
+    color: Theme.colors.primary,
+    fontFamily: "Afacad",
   },
 
   changeTone: {
     color: Theme.colors.primary,
-    fontSize: 15,
+    fontSize: Theme.sizes.mediumText,
+    fontFamily: "Afacad",
     fontWeight: "500",
   },
 
@@ -297,8 +293,9 @@ const styles = StyleSheet.create({
   },
 
   startButtonText: {
-    color: "#fff",
-    fontSize: 18,
+    color: Theme.colors.textSecondary,
+    fontSize: Theme.sizes.largeText,
+    fontFamily: "Afacad",
     textAlign: "center",
     fontWeight: "600",
   },
@@ -327,7 +324,8 @@ const styles = StyleSheet.create({
   },
 
   progressLabel: {
-    fontSize: 16,
+    fontSize: Theme.sizes.mediumText,
+    fontFamily: "Afacad",
     fontWeight: "500",
     color: Theme.colors.primary,
   },
@@ -369,15 +367,17 @@ const styles = StyleSheet.create({
   },
 
   ingredientName: {
-    fontSize: 15,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "600",
     flexShrink: 1,
-    color: "#3b2b25",
+    color: Theme.colors.primary,
+    fontFamily: "Afacad",
   },
 
   ingredientQty: {
-    fontSize: 15,
+    fontSize: Theme.sizes.mediumText,
     fontWeight: "400",
-    color: "#3b2b25",
+    color: Theme.colors.accentGray,
+    fontFamily: "Afacad",
   },
 });

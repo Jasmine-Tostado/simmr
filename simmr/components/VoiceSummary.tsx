@@ -211,8 +211,9 @@ const styles = StyleSheet.create({
   },
   headerDoneText: {
     color: Theme.colors.textSecondary,
-    fontWeight: "600",
+    fontWeight: "500",
     fontSize: Theme.sizes.smallText,
+    fontFamily: "Afacad", 
   },
 
   // photo card
@@ -230,7 +231,9 @@ const styles = StyleSheet.create({
   optionalText: {
     marginTop: 8,
     fontSize: 14,
-    color: "#E1A87A",
+    color: "#000000",
+    fontWeight: "500",
+    fontFamily: "Afacad", 
   },
   photo: {
     width: "100%",
@@ -245,7 +248,8 @@ const styles = StyleSheet.create({
   photoButtonText: {
     color: Theme.colors.textSecondary,
     fontSize: Theme.sizes.smallText,
-    fontWeight: "600",
+    fontWeight: "500",
+    fontFamily: "Afacad", 
   },
 
   // story summary
@@ -253,15 +257,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   summaryTitle: {
-    fontWeight: "700",
-    fontSize: 16,
+    fontWeight: "600",
+    fontSize: 26,
     marginBottom: 6,
     color: Theme.colors.text,
+    fontFamily: "Afacad", 
   },
   summaryBody: {
-    fontSize: 14,
+    fontSize: 20,
     lineHeight: 20,
     color: Theme.colors.text,
+    fontWeight: "400",
+    fontFamily: "Afacad", 
   },
 
   // modal camera
@@ -276,7 +283,7 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     backgroundColor: Theme.colors.background,
     paddingVertical: 24,
-    paddingHorizontal: 16,
+    paddingHorizontal: 30,
   },
   modalControlsRow: {
     flexDirection: "row",
@@ -286,7 +293,9 @@ const styles = StyleSheet.create({
   },
   modalCancelText: {
     color: Theme.colors.text,
-    fontSize: 14,
+    fontSize: 20,
+    fontWeight: "400",
+    fontFamily: "Afacad", 
   },
   
   // big round shutter button
@@ -342,6 +351,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     marginBottom: 12,
+    fontWeight: "500",
+    fontFamily: "Afacad", 
   },
   permissionButton: {
     paddingHorizontal: 16,

@@ -63,11 +63,12 @@ export type Database = {
         Row: {
           category: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes: number
+          description: string
           difficulty: Database["public"]["Enums"]["RecipeDifficulty"]
           id: string
           image_url: string
           ingredients: string[]
-          instructions: string | null
+          instructions: string[]
           kid_friendly: boolean
           num_servings: string
           restriction: Database["public"]["Enums"]["Restriction"] | null
@@ -77,11 +78,12 @@ export type Database = {
         Insert: {
           category?: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes: number
+          description: string
           difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
           image_url: string
           ingredients: string[]
-          instructions?: string | null
+          instructions: string[]
           kid_friendly: boolean
           num_servings: string
           restriction?: Database["public"]["Enums"]["Restriction"] | null
@@ -91,11 +93,12 @@ export type Database = {
         Update: {
           category?: Database["public"]["Enums"]["RecipeCategory"]
           cook_time_minutes?: number
+          description?: string
           difficulty?: Database["public"]["Enums"]["RecipeDifficulty"]
           id?: string
           image_url?: string
           ingredients?: string[]
-          instructions?: string | null
+          instructions?: string[]
           kid_friendly?: boolean
           num_servings?: string
           restriction?: Database["public"]["Enums"]["Restriction"] | null
@@ -149,6 +152,7 @@ export type Database = {
           display_name: string | null
           email: string
           id: string
+          pantry: string[]
           settings: string | null
         }
         Insert: {
@@ -156,6 +160,7 @@ export type Database = {
           display_name?: string | null
           email: string
           id?: string
+          pantry?: string[]
           settings?: string | null
         }
         Update: {
@@ -163,6 +168,7 @@ export type Database = {
           display_name?: string | null
           email?: string
           id?: string
+          pantry?: string[]
           settings?: string | null
         }
         Relationships: []

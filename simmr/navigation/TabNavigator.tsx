@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { ExploreScreen } from "@/screens/Explore";
 import { ChatScreen } from "@/screens/Chat";
 import { FriendsScreen } from "@/screens/Friends";
 import { ProfileScreen } from "@/screens/Profile";
-import { StoryLogScreen } from "@/screens/StoryLog";
+import { StoryLog as StoryLogScreen } from "@/screens/StoryLog";
 import {
   MaterialIcons,
   Ionicons,
@@ -15,21 +16,41 @@ import Theme from "@/theme";
 
 const Tab = createBottomTabNavigator();
 
+// Screens that should hide the tab bar
+const HIDE_TAB_BAR_ROUTES = [
+  "BrowseRecipes",
+  "RecipeDetails",
+  "StoryToneSelection",
+  "VoiceAI",
+];
+
 export const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: Theme.colors.primary,
+        tabBarLabelStyle: {
+          fontFamily: "Afacad",
+          fontSize: Theme.sizes.tinyText,
+        },
       }}
     >
       <Tab.Screen
         name="Explore"
         component={ExploreScreen}
-        options={{
-          headerShown: false,          
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="explore" color={color} size={size} />
-          ),
+        options={({ route }) => {
+          const routeName =
+            getFocusedRouteNameFromRoute(route) ?? "ExploreTabs";
+          return {
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="explore" color={color} size={size + 3} />
+            ),
+            tabBarStyle: HIDE_TAB_BAR_ROUTES.includes(routeName)
+              ? { display: "none" }
+              : undefined,
+          };
         }}
       />
       <Tab.Screen

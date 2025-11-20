@@ -11,6 +11,9 @@ export type StoryLogsInsert =
   Database["public"]["Tables"]["story_logs"]["Insert"];
 export type StoryLogsSelect = Database["public"]["Tables"]["story_logs"]["Row"];
 
+export type UsersInsert = Database["public"]["Tables"]["users"]["Insert"];
+export type UsersSelect = Database["public"]["Tables"]["users"]["Row"];
+
 export type RecipeCategory = Database["public"]["Enums"]["RecipeCategory"];
 export type RecipeDifficulty = Database["public"]["Enums"]["RecipeDifficulty"];
 export type Restriction = Database["public"]["Enums"]["Restriction"];

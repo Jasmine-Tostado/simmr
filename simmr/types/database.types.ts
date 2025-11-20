@@ -152,6 +152,7 @@ export type Database = {
           display_name: string | null
           email: string
           id: string
+          pantry: string[]
           settings: string | null
         }
         Insert: {
@@ -159,6 +160,7 @@ export type Database = {
           display_name?: string | null
           email: string
           id?: string
+          pantry?: string[]
           settings?: string | null
         }
         Update: {
@@ -166,6 +168,7 @@ export type Database = {
           display_name?: string | null
           email?: string
           id?: string
+          pantry?: string[]
           settings?: string | null
         }
         Relationships: []

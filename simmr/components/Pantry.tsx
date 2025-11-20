@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,68 +8,60 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Theme from "@/theme";
-
-const COMMON_INGREDIENTS: string[] = [
-  "Chicken",
-  "Beef",
-  "Pork",
-  "Fish",
-  "Shrimp",
-  "Tofu",
-  "Bacon",
-  "Milk",
-  "Yogurt",
-  "Cream",
-  "Sour Cream",
-  "Potatoes",
-  "Carrots",
-  "Broccoli",
-  "Spinach",
-  "Bell Peppers",
-  "Lettuce",
-  "Cucumber",
-  "Rice",
-  "Bread",
-  "Flour",
-  "Sugar",
-  "Salt",
-  "Pepper",
-  "Olive Oil",
-  "Vegetable Oil",
-  "Basil",
-  "Oregano",
-  "Thyme",
-  "Rosemary",
-  "Paprika",
-  "Cumin",
-  "Cinnamon",
-  "Canned Tomatoes",
-  "Beans",
-];
+import { COMMON_INGREDIENTS } from "@/utils/constants";
+import { useAuthContext } from "@/auth/use-auth-context";
+import db from "@/database";
 
 export const Pantry = () => {
   const [customIngredient, setCustomIngredient] = useState<string>("");
-  const [myIngredients, setMyIngredients] = useState<string[]>([
-    "Chicken",
-    "Pasta",
-    "Eggs",
-    "Butter",
-    "Garlic",
-    "Onions",
-    "Tomatoes",
-    "Cheese",
-  ]);
+  const [myIngredients, setMyIngredients] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { userData } = useAuthContext();
+
+  // Sync pantry state with userData when it changes
+  useEffect(() => {
+    setIsLoading(true);
+    if (userData?.pantry) {
+      setMyIngredients(userData.pantry);
+    } else {
+      setMyIngredients([]);
+    }
+    setIsLoading(false);
+  }, [userData?.pantry]);
+
+  const handleUpdatePantry = async (ingredients?: string[]) => {
+    try {
+      if (!userData) return;
+      setIsLoading(true);
+      const { data, error } = await db
+        .from("users")
+        .update({ pantry: ingredients ?? myIngredients })
+        .eq("id", userData.id);
+      if (error) {
+        console.error("Error updating pantry", error);
+      }
+      console.log("Pantry updated");
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error updating pantry", error);
+      setIsLoading(false);
+    }
+  };
 
   const handleAddIngredient = (name: string) => {
     const trimmed = name.trim();
     if (!trimmed) return;
     if (myIngredients.includes(trimmed)) return;
-    setMyIngredients((prev) => [...prev, trimmed]);
+    const newIngredients = [...myIngredients, trimmed];
+    setMyIngredients(newIngredients);
     setCustomIngredient("");
+    handleUpdatePantry(newIngredients);
   };
 
   const handleRemoveIngredient = (name: string) => {
-    setMyIngredients((prev) => prev.filter((item) => item !== name));
+    const newIngredients = myIngredients.filter((item) => item !== name);
+    setMyIngredients(newIngredients);
+    handleUpdatePantry(newIngredients);
   };
 
   const availableIngredients = COMMON_INGREDIENTS.filter(
@@ -94,6 +86,7 @@ export const Pantry = () => {
             />
             <TouchableOpacity
               style={styles.addButton}
+              disabled={isLoading}
               onPress={() => handleAddIngredient(customIngredient)}
             >
               <Text style={styles.addButtonText}>+ Add</Text>
@@ -109,6 +102,7 @@ export const Pantry = () => {
             <TouchableOpacity
               key={ingredient}
               style={styles.myChip}
+              disabled={isLoading}
               onPress={() => handleRemoveIngredient(ingredient)}
             >
               <Text style={styles.myChipText}>{ingredient}</Text>
@@ -123,6 +117,7 @@ export const Pantry = () => {
             <TouchableOpacity
               key={ingredient}
               style={styles.commonChip}
+              disabled={isLoading}
               onPress={() => handleAddIngredient(ingredient)}
             >
               <Text style={styles.commonChipText}>{ingredient}</Text>
@@ -208,11 +203,11 @@ const styles = StyleSheet.create({
     color: Theme.colors.textSecondary,
     fontWeight: "500",
     marginRight: 6,
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
     fontSize: Theme.sizes.tinyText,
   },
   myChipRemove: {
-      color: Theme.colors.textSecondary,
+    color: Theme.colors.textSecondary,
     fontSize: Theme.sizes.tinyText,
     fontFamily: "Afacad",
   },

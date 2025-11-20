@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome6 } from "@expo/vector-icons";
 import { FriendsStackParamList } from "@/types";
 import Theme from "@/theme";
 
@@ -21,12 +21,16 @@ export const TopActionButton = ({
 }: TopActionButtonProps) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <FontAwesome5
-        name={iconName}
-        size={24}
-        color={Theme.colors.primary}
-        fill={Theme.colors.primary}
-      />
+      {iconName === "calendar" ? (
+        <FontAwesome6
+          name={iconName}
+          size={24}
+          color={Theme.colors.primary}
+          fill={Theme.colors.primary}
+        />
+      ) : (
+        <FontAwesome5 name={iconName} size={24} color={Theme.colors.primary} />
+      )}
       <Text style={styles.headerTitle}>{title}</Text>
       {subtitle && <Text style={styles.headerSubtitle}>{subtitle}</Text>}
     </TouchableOpacity>

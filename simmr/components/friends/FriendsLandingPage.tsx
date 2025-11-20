@@ -3,24 +3,77 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
   Image,
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import db from "@/database";
 import { RecipesSelect, FriendsStackParamList, RecipeCategory } from "@/types";
 import Theme from "@/theme";
 import { getCategoryTitle } from "@/utils/recipeCategories";
 import { TopActionButton } from "./TopActionButton";
+import { CookingSessionsSelect } from "@/types";
+import { SessionCard } from "./SessionCard";
 
 type NavigationProp = StackNavigationProp<FriendsStackParamList>;
 
+const upcomingSessions: CookingSessionsSelect[] = [
+  {
+    id: "1",
+    title: "Group Cooking Session 1",
+    creator_id: "1",
+    invited_friends: ["2", "3"],
+    location: "123 Main St, Anytown, USA",
+    recipe_id: "1",
+    session_date: "2025-01-01",
+    story_theme: "Family Dinner",
+    session_time: "6:00",
+  },
+  {
+    id: "2",
+    title: "Group Cooking Session 2",
+    creator_id: "2",
+    invited_friends: ["3", "4"],
+    location: "456 Main St, Anytown, USA",
+    recipe_id: "2",
+    session_date: "2025-01-02",
+    story_theme: "Family Dinner",
+    session_time: "7:00",
+  },
+];
+
+const pastSessions: CookingSessionsSelect[] = [
+  {
+    id: "3",
+    title: "Group Cooking Session 3",
+    creator_id: "3",
+    invited_friends: ["4", "5"],
+    location: "789 Main St, Anytown, USA",
+    recipe_id: "3",
+    session_date: "2025-01-03",
+    story_theme: "Family Dinner",
+    session_time: "8:00",
+  },
+  {
+    id: "4",
+    title: "Group Cooking Session 4",
+    creator_id: "4",
+    invited_friends: ["5", "6"],
+    location: "101 Main St, Anytown, USA",
+    recipe_id: "4",
+    session_date: "2025-01-04",
+    story_theme: "Family Dinner",
+    session_time: "9:00",
+  },
+];
+
 export const FriendsLandingPage = () => {
   const navigation = useNavigation<NavigationProp>();
+
+
 
   return (
     <View style={styles.container}>
@@ -48,9 +101,18 @@ export const FriendsLandingPage = () => {
         />
       </View>
 
-      <Text style={styles.sectionTitle}>Upcoming sessions</Text>
+      <ScrollView>
+        <Text style={styles.sectionTitle}>Upcoming sessions</Text>
+        {upcomingSessions.map((session) => (
+          <SessionCard key={session.id} session={session} />
+        ))}
 
-      <Text style={styles.sectionTitle}>Past sessions</Text>
+        <Text style={styles.sectionTitle}>Past sessions</Text>
+        {pastSessions.map((session) => (
+          <SessionCard key={session.id} session={session} />
+        ))}
+        <View style={{ height: 40 }} />
+      </ScrollView>
     </View>
   );
 };
@@ -80,7 +142,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 14,
   },
   sectionTitle: {
-    fontSize: Theme.sizes.mediumText,
+    fontSize: 22,
     fontWeight: "500",
     paddingHorizontal: 16,
     color: Theme.colors.text,

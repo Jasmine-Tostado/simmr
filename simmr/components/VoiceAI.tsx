@@ -260,7 +260,7 @@ export const VoiceAI = () => {
   );
 };
 
-const SMALLER_TEXT = 14;
+const SMALLER_TEXT = 16;
 
 const styles = StyleSheet.create({
   container: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     width: "80%",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 16,
+    marginTop: 30,
   },
   progressLabelColumn: {
     flex: 1,
@@ -308,13 +308,15 @@ const styles = StyleSheet.create({
     fontSize: SMALLER_TEXT,
     color: Theme.colors.text,
     textAlign: "center",
+    fontFamily: "Afacad",
+    fontWeight: "500",
   },
   controlsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "60%",
-    marginBottom: 12,
-    marginTop: 4,
+    marginBottom: 15,
+    marginTop: -13,
   },
   controlButton: {
     alignItems: "center",
@@ -325,10 +327,12 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     textAlign: "center",
-    fontSize: Theme.sizes.smallText,
+    fontSize: 20,
     color: Theme.colors.text,
     marginHorizontal: 16,
     marginBottom: 18,
+    fontFamily: "Afacad",      
+  fontWeight: "400",  
   },
 
   // ring + image
@@ -372,15 +376,17 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   storyText: {
-    fontSize: SMALLER_TEXT,
+    fontSize: SMALLER_TEXT + 4,
     color: Theme.colors.text,
     textAlign: "center",
     lineHeight: 20,
+    fontFamily: "Afacad",     
+    fontWeight: "400",  
   },
 
   // square-ish pause button
   pauseButton: {
-    marginTop: 4,
+    marginTop: 10,
     width: 50,
     height: 38,
     borderRadius: 12,
@@ -392,14 +398,15 @@ const styles = StyleSheet.create({
   doneButton: {
     marginTop: 16,
     paddingVertical: 14,
-    paddingHorizontal: 40,
+    paddingHorizontal: 30,
     borderRadius: 999,
     backgroundColor: Theme.colors.primary,
   },
   doneButtonText: {
     color: Theme.colors.textSecondary,
-    fontSize: Theme.sizes.smallText,
-    fontWeight: "600",
+    fontSize: 25,
+    fontWeight: "400",
+    fontFamily: "Afacad",     
   },
 
   // pause modal styles
@@ -423,16 +430,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   modalTitle: {
-    fontSize: Theme.sizes.mediumText,
+    fontSize: Theme.sizes.mediumText + 4,
     color: Theme.colors.primary,
     textAlign: "center",
     marginBottom: 12,
+    fontWeight: "400",
+    fontFamily: "Afacad",  
   },
   modalBody: {
-    fontSize: SMALLER_TEXT,
+    fontSize: SMALLER_TEXT + 4,
     color: Theme.colors.text,
     textAlign: "center",
     marginBottom: 24,
+    fontWeight: "400",
+    fontFamily: "Afacad",  
   },
   modalButton: {
     alignSelf: "center",
@@ -445,6 +456,7 @@ const styles = StyleSheet.create({
     color: Theme.colors.textSecondary,
     fontSize: Theme.sizes.smallText,
     fontWeight: "600",
+    fontFamily: "Afacad",  
   },
 });
 

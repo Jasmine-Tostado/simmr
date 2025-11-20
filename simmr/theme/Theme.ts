@@ -10,6 +10,8 @@ export const Theme = {
     inputDefaultText: "#646464",
     disabledButton: "#D9D9D9",
     accentGray: "#2c2828ff",
+    tagBackground: "#f1e6df",
+    grayTagBackground: "#e7e4e4",
   },
   sizes: {
     tinyText: 14,

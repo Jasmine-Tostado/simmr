@@ -8,15 +8,15 @@ import {
   Image,
   Modal,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  CommonActions,
+} from "@react-navigation/native";
 import { FontAwesome6 } from "@expo/vector-icons";
 import Theme from "@/theme";
 import { RecipesSelect } from "@/types";
-import {
-  CameraView,
-  CameraType,
-  useCameraPermissions,
-} from "expo-camera";
+import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 
 type RouteParams = {
   recipe: RecipesSelect;
@@ -63,8 +63,32 @@ export const VoiceSummary = () => {
   };
 
   const handleDone = () => {
-    // go to StoryLog tab/screen – change "StoryLog" if your route name is different
-    navigation.navigate("StoryLog");
+    // Reset the Explore stack to go back to ExploreTabs (initial screen)
+    // This prevents users from seeing VoiceAI/VoiceSummary when they navigate back
+    // Get the tab navigator (parent of the Explore stack)
+    const tabNavigator = navigation.getParent();
+
+    if (tabNavigator) {
+      // Reset the Explore stack to its initial state
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "ExploreTabs" }],
+        })
+      );
+      // Navigate to StoryLog tab
+      tabNavigator.navigate("StoryLog");
+    } else {
+      // Fallback: reset stack and try to navigate to StoryLog
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "ExploreTabs" }],
+        })
+      );
+      // Try navigating to StoryLog at root level
+      (navigation as any).navigate("StoryLog");
+    }
   };
 
   return (
@@ -213,7 +237,7 @@ const styles = StyleSheet.create({
     color: Theme.colors.textSecondary,
     fontWeight: "500",
     fontSize: Theme.sizes.smallText,
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
 
   // photo card
@@ -233,7 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000000",
     fontWeight: "500",
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
   photo: {
     width: "100%",
@@ -249,7 +273,7 @@ const styles = StyleSheet.create({
     color: Theme.colors.textSecondary,
     fontSize: Theme.sizes.smallText,
     fontWeight: "500",
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
 
   // story summary
@@ -261,14 +285,14 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginBottom: 6,
     color: Theme.colors.text,
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
   summaryBody: {
     fontSize: 20,
     lineHeight: 20,
     color: Theme.colors.text,
     fontWeight: "400",
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
 
   // modal camera
@@ -295,16 +319,16 @@ const styles = StyleSheet.create({
     color: Theme.colors.text,
     fontSize: 20,
     fontWeight: "400",
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
-  
+
   // big round shutter button
   shutterButtonOuter: {
     width: 64,
     height: 64,
     borderRadius: 32,
     borderWidth: 3,
-    borderColor: Theme.colors.primary,   // visible outline
+    borderColor: Theme.colors.primary, // visible outline
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Theme.colors.background,
@@ -352,7 +376,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 12,
     fontWeight: "500",
-    fontFamily: "Afacad", 
+    fontFamily: "Afacad",
   },
   permissionButton: {
     paddingHorizontal: 16,
@@ -365,7 +389,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
-
 
 // // VoiceSummary.tsx
 // import React, { useEffect, useRef, useState } from "react";

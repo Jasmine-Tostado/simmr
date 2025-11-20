@@ -28,6 +28,7 @@ export const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: Theme.colors.primary,
         tabBarLabelStyle: {
           fontFamily: "Afacad",

@@ -15,7 +15,7 @@ export const StoryToneTag = ({
     <View
       style={[
         styles.container,
-        { backgroundColor: color || Theme.colors.inputBackground },
+        { backgroundColor: color || Theme.colors.grayTagBackground },
       ]}
     >
       <Text style={[styles.text, { color: textColor || Theme.colors.text }]}>

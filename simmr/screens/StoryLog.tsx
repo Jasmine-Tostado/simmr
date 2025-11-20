@@ -7,11 +7,13 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Theme from "@/theme";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { RecipesSelect } from "@/types";
+import { StoryToneTag } from "@/components/StoryToneTag";
 
 type LogEntry = {
   recipe: RecipesSelect;
@@ -31,7 +33,8 @@ export const StoryLog = () => {
       recipe: {
         id: "1",
         title: "Berry Smoothies",
-        image_url: "https://images.unsplash.com/photo-1584270354949-1fbb8b2c8e94",
+        image_url:
+          "https://images.unsplash.com/photo-1584270354949-1fbb8b2c8e94",
         cook_time_minutes: "20",
         num_servings: "2",
         story_tone: "Educational",
@@ -44,7 +47,8 @@ export const StoryLog = () => {
       recipe: {
         id: "2",
         title: "Creamy Chicken Pasta",
-        image_url: "https://images.unsplash.com/photo-1603079847631-e4c1a6fb3c2d",
+        image_url:
+          "https://images.unsplash.com/photo-1603079847631-e4c1a6fb3c2d",
         cook_time_minutes: "20",
         num_servings: "3",
         story_tone: "Cozy",
@@ -73,15 +77,15 @@ export const StoryLog = () => {
   const filteredLogs = mockLogs.filter((entry) => {
     if (activeTab === "All") return true;
     if (activeTab === "Kids") return entry.recipe.kid_friendly;
-    if (activeTab === "Friends") return parseInt(entry.recipe.num_servings) >= 4;
+    if (activeTab === "Friends")
+      return parseInt(entry.recipe.num_servings) >= 4;
     if (activeTab === "Combos") return !entry.recipe.kid_friendly;
     return true;
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-
         {/* Header */}
         <Text style={styles.header}>Story Log</Text>
         <Text style={styles.subHeader}>Your cooking journey</Text>
@@ -112,13 +116,16 @@ export const StoryLog = () => {
         {/* Log Cards */}
         {filteredLogs.map((entry, index) => (
           <View key={index} style={styles.card}>
-            <Image source={{ uri: entry.recipe.image_url }} style={styles.cardImage} />
+            <Image
+              source={{ uri: entry.recipe.image_url }}
+              style={styles.cardImage}
+            />
 
             <View style={styles.cardContent}>
               <Text style={styles.cardTitle}>{entry.recipe.title}</Text>
 
               <View style={styles.chip}>
-                <Text style={styles.chipText}>{entry.tone}</Text>
+                <StoryToneTag storyTone={entry.recipe.story_tone} />
               </View>
 
               <View style={styles.metaRow}>
@@ -160,7 +167,7 @@ export const StoryLog = () => {
 
         <View style={{ height: 80 }} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -168,21 +175,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Theme.colors.background,
-    paddingTop: 16,
   },
 
   header: {
-    fontSize: 32,
+    fontSize: Theme.sizes.headerTitle,
     fontWeight: "700",
     paddingHorizontal: 16,
     color: Theme.colors.primary,
+    fontFamily: "Agbalumo",
   },
 
   subHeader: {
-    fontSize: 16,
+    fontSize: Theme.sizes.smallText,
     paddingHorizontal: 16,
     color: "#444",
     marginBottom: 20,
+    fontFamily: "Afacad",
   },
 
   tabsRow: {
@@ -206,9 +214,10 @@ const styles = StyleSheet.create({
   },
 
   tabText: {
-    fontSize: 14,
+    fontSize: Theme.sizes.tinyText,
     fontWeight: "500",
     color: Theme.colors.primary,
+    fontFamily: "Afacad",
   },
 
   activeTabText: {
@@ -237,18 +246,16 @@ const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    fontSize: 20,
     fontWeight: "700",
     marginBottom: 6,
     color: "#3b2b25",
+    fontFamily: "Afacad",
+    fontSize: Theme.sizes.mediumText,
   },
 
   chip: {
     alignSelf: "flex-start",
-    paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: "#e7e4e4",
-    borderRadius: 10,
     marginBottom: 8,
   },
 
@@ -270,8 +277,9 @@ const styles = StyleSheet.create({
   },
 
   metaText: {
-    fontSize: 14,
     color: "#444",
+    fontFamily: "Afacad",
+    fontSize: Theme.sizes.smallText,
   },
 
   cardDivider: {
@@ -296,5 +304,7 @@ const styles = StyleSheet.create({
   cookButtonText: {
     color: Theme.colors.primary,
     fontWeight: "600",
+    fontFamily: "Afacad",
+    fontSize: Theme.sizes.smallText,
   },
 });

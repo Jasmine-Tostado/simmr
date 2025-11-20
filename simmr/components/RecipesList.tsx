@@ -141,9 +141,6 @@ const RecipesCarousel = ({
 const RecipeCard = ({ recipe }: { recipe: RecipesSelect }) => {
   const navigation = useNavigation<NavigationProp>();
 
-  const servings = recipe.num_servings;
-  const cookTime = `${recipe.cook_time_minutes} min`;
-
   return (
     <TouchableOpacity
       style={styles.recipeCard}
@@ -175,7 +172,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipesSelect }) => {
         <View style={styles.badgeRow}>
           <StoryToneTag
             storyTone={recipe.story_tone}
-            color="#f1e6df"
+            color={Theme.colors.tagBackground}
             textColor={Theme.colors.text}
           />
           {recipe.kid_friendly && recipe.category !== "Kids" && (

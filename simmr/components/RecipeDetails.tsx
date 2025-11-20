@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -38,29 +38,6 @@ export const RecipeDetails = () => {
     ingredients,
   } = recipe;
 
-  const total = ingredients.length;
-  let have = ingredients.filter((item) => {
-    const [name, amount] = item.split(":");
-    console.log("ITEM: ", item);
-    console.log(userIngredients);
-    console.log(userIngredients.includes(item));
-    return userIngredients.includes(name);
-  }).length;
-  let percent = total > 0 ? Math.round((have / total) * 100) : 0;
-
-  // Sync pantry state with userData when it changes
-  useEffect(() => {
-    fetchUserIngredients();
-    have = ingredients.filter((item) => {
-      const [name, amount] = item.split(":");
-      console.log("ITEM: ", item);
-      console.log(userIngredients);
-      console.log(userIngredients.includes(item));
-      return userIngredients.includes(name);
-    }).length;
-    percent = total > 0 ? Math.round((have / total) * 100) : 0;
-  }, [userData?.pantry]);
-
   const fetchUserIngredients = async () => {
     try {
       if (!userData) return;
@@ -72,7 +49,6 @@ export const RecipeDetails = () => {
         console.error(error);
       }
       if (data) {
-        console.log(data);
         setUserIngredients(data[0].pantry || []);
       }
     } catch (error) {
@@ -80,6 +56,22 @@ export const RecipeDetails = () => {
     } finally {
     }
   };
+
+  // Sync pantry state with userData when it changes
+  useEffect(() => {
+    fetchUserIngredients();
+  }, [userData?.pantry]);
+
+  // Calculate ingredient availability
+  const { have, percent, total } = useMemo(() => {
+    const total = ingredients.length;
+    const have = ingredients.filter((item) => {
+      const [name] = item.split(":");
+      return userIngredients.includes(name);
+    }).length;
+    const percent = total > 0 ? Math.round((have / total) * 100) : 0;
+    return { have, percent, total };
+  }, [ingredients, userIngredients]);
 
   const description = (recipe as any).description ?? "";
 

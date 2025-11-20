@@ -1,4 +1,8 @@
 export const COMMON_INGREDIENTS: string[] = [
+  "Eggs",
+  "Pasta",
+  "Butter",
+  "Cheese",
   "Chicken",
   "Beef",
   "Pork",

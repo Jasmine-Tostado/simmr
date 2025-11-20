@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons, FontAwesome } from "@expo/vector-icons";
 import Theme from "@/theme";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ExploreStackParamList, RecipesSelect } from "@/types";
@@ -15,10 +16,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StoryToneTag } from "@/components/StoryToneTag";
 import { StoryTone } from "@/types";
 import { getRestrictionImage } from "@/utils/recipeCategories";
+import { useAuthContext } from "@/auth/use-auth-context";
+import db from "@/database";
 
 type NavigationProp = StackNavigationProp<ExploreStackParamList>;
 
 export const RecipeDetails = () => {
+  const [userIngredients, setUserIngredients] = useState<string[]>([]);
+  const { userData } = useAuthContext();
   const route = useRoute();
   const navigation = useNavigation<NavigationProp>();
   const { recipe } = route.params as { recipe: RecipesSelect };
@@ -33,14 +38,50 @@ export const RecipeDetails = () => {
     ingredients,
   } = recipe;
 
-  const description = (recipe as any).description ?? "";
+  const total = ingredients.length;
+  let have = ingredients.filter((item) => {
+    const [name, amount] = item.split(":");
+    console.log("ITEM: ", item);
+    console.log(userIngredients);
+    console.log(userIngredients.includes(item));
+    return userIngredients.includes(name);
+  }).length;
+  let percent = total > 0 ? Math.round((have / total) * 100) : 0;
 
-  const list = Array.isArray(ingredients) ? ingredients : [];
-  const total = list.length;
-  const have = list.filter(
-    (item) => typeof item !== "string" && (item as any).have
-  ).length;
-  const percent = total > 0 ? Math.round((have / total) * 100) : 0;
+  // Sync pantry state with userData when it changes
+  useEffect(() => {
+    fetchUserIngredients();
+    have = ingredients.filter((item) => {
+      const [name, amount] = item.split(":");
+      console.log("ITEM: ", item);
+      console.log(userIngredients);
+      console.log(userIngredients.includes(item));
+      return userIngredients.includes(name);
+    }).length;
+    percent = total > 0 ? Math.round((have / total) * 100) : 0;
+  }, [userData?.pantry]);
+
+  const fetchUserIngredients = async () => {
+    try {
+      if (!userData) return;
+      const { data, error } = await db
+        .from("users")
+        .select("pantry")
+        .eq("id", userData.id);
+      if (error) {
+        console.error(error);
+      }
+      if (data) {
+        console.log(data);
+        setUserIngredients(data[0].pantry || []);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+    }
+  };
+
+  const description = (recipe as any).description ?? "";
 
   return (
     <View style={styles.container}>
@@ -160,25 +201,23 @@ export const RecipeDetails = () => {
         <Text style={styles.sectionTitle}>Ingredients</Text>
 
         <View style={styles.ingredientsList}>
-          {list.map((item, i) => {
-            if (typeof item === "string") {
-              const [name, amount] = item.split(":");
-              return (
-                <View key={i} style={styles.ingredientRow}>
-                  <Text style={styles.ingredientName}>{name?.trim()}</Text>
-                  <Text style={styles.ingredientQty}>
-                    {amount?.trim() || ""}
-                  </Text>
-                </View>
-              );
-            }
-
-            const ing = item as any;
-
+          {ingredients.map((item, i) => {
+            const [name, amount] = item.split(":");
             return (
               <View key={i} style={styles.ingredientRow}>
-                <Text style={styles.ingredientName}>{ing.name}</Text>
-                <Text style={styles.ingredientQty}>{ing.amount}</Text>
+                <View style={styles.ingredientNameContainer}>
+                  <FontAwesome
+                    name={
+                      userIngredients.includes(name)
+                        ? "check-circle"
+                        : "circle-thin"
+                    }
+                    size={20}
+                    color={Theme.colors.primary}
+                  />
+                  <Text style={styles.ingredientName}>{name?.trim()}</Text>
+                </View>
+                <Text style={styles.ingredientQty}>{amount?.trim() || ""}</Text>
               </View>
             );
           })}
@@ -368,8 +407,8 @@ const styles = StyleSheet.create({
 
   ingredientRow: {
     backgroundColor: "#faefe6",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#e2d2c7",
@@ -409,5 +448,10 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: "#999",
     marginHorizontal: 6,
+  },
+  ingredientNameContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
 });

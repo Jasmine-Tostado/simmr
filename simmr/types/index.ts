@@ -1,4 +1,9 @@
 import { Database } from "./database.types";
+import {
+  ExploreStackParamList,
+  FriendsStackParamList,
+} from "./navigation.types";
+
 export type RecipesInsert = Database["public"]["Tables"]["recipes"]["Insert"];
 export type RecipesSelect = Database["public"]["Tables"]["recipes"]["Row"];
 
@@ -19,15 +24,4 @@ export type RecipeDifficulty = Database["public"]["Enums"]["RecipeDifficulty"];
 export type Restriction = Database["public"]["Enums"]["Restriction"];
 export type StoryTone = Database["public"]["Enums"]["StoryTone"];
 
-export type ExploreStackParamList = {
-  ExploreTabs: undefined;
-  StoryToneSelection: {
-    storyTone: StoryTone;
-    onSaveToneSelection: (newStoryTone: StoryTone) => void;
-    buttonText: string;
-  };
-  BrowseRecipes: { recipes: RecipesSelect[] };
-  RecipeDetails: { recipe: RecipesSelect };
-  VoiceAI: { recipe: RecipesSelect };
-  VoiceSummary: { recipe: RecipesSelect };
-};
+export { ExploreStackParamList, FriendsStackParamList };

@@ -22,7 +22,9 @@ export type Database = {
           location: string | null
           recipe_id: string | null
           session_date: string
+          session_time: string
           story_theme: string | null
+          title: string
         }
         Insert: {
           creator_id: string
@@ -31,7 +33,9 @@ export type Database = {
           location?: string | null
           recipe_id?: string | null
           session_date: string
+          session_time: string
           story_theme?: string | null
+          title: string
         }
         Update: {
           creator_id?: string
@@ -40,7 +44,9 @@ export type Database = {
           location?: string | null
           recipe_id?: string | null
           session_date?: string
+          session_time?: string
           story_theme?: string | null
+          title?: string
         }
         Relationships: [
           {

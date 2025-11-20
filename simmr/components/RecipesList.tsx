@@ -12,8 +12,20 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { FontAwesome6 } from "@expo/vector-icons";
 import db from "@/database";
-import { RecipesSelect, ExploreStackParamList } from "@/types";
+import { RecipesSelect, ExploreStackParamList, RecipeCategory } from "@/types";
 import Theme from "@/theme";
+import { getCategoryTitle } from "@/utils/recipeCategories";
+import { StoryToneTag } from "./StoryToneTag";
+
+const RECIPE_CATEGORIES: RecipeCategory[] = [
+  "Browse",
+  "Friends",
+  "Kids",
+  "TikTok",
+  "Challenge",
+  "ThreeBites",
+  "Sweets",
+];
 
 type NavigationProp = StackNavigationProp<ExploreStackParamList>;
 
@@ -50,46 +62,37 @@ export const RecipesList = () => {
     return !isKid && !isFriends;
   });
 
+  const getRecipesByCategory = (category: RecipeCategory): RecipesSelect[] => {
+    return recipes.filter((recipe) => recipe.category === category);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        <SectionHeader
-          title="Recipes for you"
-          onPress={() =>
-            navigation.navigate("BrowseRecipes", {
-              recipes: recommendedRecipes,
-            })
-          }
-        />
-        <RecipesCarousel
-          data={recommendedRecipes}
-          emptyLabel="No recipes yet – add some to get started!"
-        />
-
-        <SectionHeader
-          title="Cooking with kids"
-          onPress={() =>
-            navigation.navigate("BrowseRecipes", { recipes: kidsRecipes })
-          }
-        />
-        <RecipesCarousel
-          data={kidsRecipes}
-          emptyLabel="No kid-friendly recipes yet."
-        />
-
-        <SectionHeader
-          title="Cooking with friends"
-          onPress={() =>
-            navigation.navigate("BrowseRecipes", { recipes: friendsRecipes })
-          }
-        />
-        <RecipesCarousel
-          data={friendsRecipes}
-          emptyLabel="No group recipes yet."
-        />
+        {RECIPE_CATEGORIES.map((category) => {
+          const categoryRecipes = getRecipesByCategory(category);
+          return (
+            <View key={category}>
+              <SectionHeader
+                title={getCategoryTitle(category)}
+                onPress={() =>
+                  navigation.navigate("BrowseRecipes", {
+                    recipes: categoryRecipes,
+                  })
+                }
+              />
+              <RecipesCarousel
+                data={categoryRecipes}
+                emptyLabel={`No ${getCategoryTitle(
+                  category
+                ).toLowerCase()} yet.`}
+              />
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -156,21 +159,31 @@ const RecipeCard = ({ recipe }: { recipe: RecipesSelect }) => {
         <Text numberOfLines={1} style={styles.recipeTitle}>
           {recipe.title}
         </Text>
-        <View style={styles.recipeMetaRow}>
-          <Text style={styles.metaText}>{cookTime}</Text>
+
+        <View style={styles.metaRow}>
+          <View style={styles.metaItem}>
+            <FontAwesome6 name="clock" size={14} color="#444" />
+            <Text style={styles.metaText}>{recipe.cook_time_minutes} min</Text>
+          </View>
           <View style={styles.metaDot} />
-          <Text style={styles.metaText}>{recipe.story_tone}</Text>
+          <View style={styles.metaItem}>
+            <FontAwesome6 name="users" size={14} color="#444" />
+            <Text style={styles.metaText}>{recipe.num_servings} servings</Text>
+          </View>
         </View>
+
         <View style={styles.badgeRow}>
-          {recipe.kid_friendly && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>Kid friendly</Text>
-            </View>
-          )}
-          {!!servings && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>Serves {servings}</Text>
-            </View>
+          <StoryToneTag
+            storyTone={recipe.story_tone}
+            color="#f1e6df"
+            textColor={Theme.colors.text}
+          />
+          {recipe.kid_friendly && recipe.category !== "Kids" && (
+            <StoryToneTag
+              storyTone="Kid-Friendly"
+              color={Theme.colors.primary}
+              textColor={Theme.colors.textSecondary}
+            />
           )}
         </View>
       </View>
@@ -264,5 +277,17 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: Theme.sizes.smallText,
     fontFamily: "Afacad",
+  },
+
+  metaRow: {
+    flexDirection: "row",
+    marginBottom: 6,
+    alignItems: "center",
+  },
+
+  metaItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
 });

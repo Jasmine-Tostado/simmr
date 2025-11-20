@@ -13,6 +13,7 @@ import Theme from "@/theme";
 import { RecipesSelect } from "@/types";
 
 import { BrowseRecipeCard } from "./BrowseRecipeCard";
+import { getCategoryTitle } from "@/utils/recipeCategories";
 
 export const BrowseRecipes = () => {
   const [search, setSearch] = useState("");
@@ -32,31 +33,9 @@ export const BrowseRecipes = () => {
     setFilteredRecipes(filteredRecipes);
   };
 
-  let headerTitle = "";
-  const category = recipes[0].category;
-  switch (category) {
-    case "Browse":
-      headerTitle = "Browse recipes for you";
-      break;
-    case "Friends":
-      headerTitle = "Cooking with friends";
-      break;
-    case "Kids":
-      headerTitle = "Cooking with kids";
-      break;
-    case "TikTok":
-      headerTitle = "Trending on TikTok";
-      break;
-    case "Challenge":
-      headerTitle = "Challenge recipes";
-      break;
-    case "ThreeBites":
-      headerTitle = "3 Ingredient bites ";
-      break;
-    case "Sweets":
-      headerTitle = "Sweet cravings";
-      break;
-  }
+  const headerTitle = recipes[0]?.category
+    ? getCategoryTitle(recipes[0].category)
+    : "Browse Recipes for you";
 
   return (
     <View style={styles.container}>

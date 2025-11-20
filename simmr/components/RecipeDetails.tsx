@@ -14,6 +14,7 @@ import { ExploreStackParamList, RecipesSelect } from "@/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StoryToneTag } from "@/components/StoryToneTag";
 import { StoryTone } from "@/types";
+import { getRestrictionImage } from "@/utils/recipeCategories";
 
 type NavigationProp = StackNavigationProp<ExploreStackParamList>;
 
@@ -68,7 +69,15 @@ export const RecipeDetails = () => {
           />
         </View>
 
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{title}</Text>
+          {recipe.restriction && recipe.restriction !== "None" && (
+            <Image
+              source={getRestrictionImage(recipe.restriction)}
+              style={styles.restrictionImage}
+            />
+          )}
+        </View>
 
         <Text style={styles.description}>{description}</Text>
 
@@ -78,10 +87,14 @@ export const RecipeDetails = () => {
             <Text style={styles.metaText}>{cook_time_minutes} min</Text>
           </View>
 
+          <View style={styles.metaDot} />
+
           <View style={styles.metaItem}>
             <FontAwesome6 name="users" size={14} color="#444" />
             <Text style={styles.metaText}>{num_servings} servings</Text>
           </View>
+
+          <View style={styles.metaDot} />
 
           <View style={styles.metaItem}>
             <MaterialCommunityIcons name="chef-hat" size={16} color="#444" />
@@ -183,7 +196,6 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.background,
   },
   header: {
-    paddingHorizontal: 20,
     paddingVertical: 10,
   },
   headerTitleContainer: {
@@ -213,7 +225,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Theme.sizes.headerTitle,
     fontWeight: "700",
-    paddingHorizontal: 16,
     color: Theme.colors.primary,
     marginBottom: 4,
     fontFamily: "Agbalumo",
@@ -229,9 +240,10 @@ const styles = StyleSheet.create({
 
   metaRow: {
     flexDirection: "row",
-    gap: 22,
     paddingHorizontal: 16,
     marginBottom: 18,
+    alignItems: "center",
+    gap: 5,
   },
 
   metaItem: {
@@ -379,5 +391,23 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: Theme.colors.accentGray,
     fontFamily: "Afacad",
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  restrictionImage: {
+    width: 45,
+    height: 60,
+  },
+  metaDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#999",
+    marginHorizontal: 6,
   },
 });

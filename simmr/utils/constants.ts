@@ -1,3 +1,5 @@
+import { RecipeCategory } from "@/types";
+
 export const COMMON_INGREDIENTS: string[] = [
   "Eggs",
   "Pasta",
@@ -38,4 +40,14 @@ export const COMMON_INGREDIENTS: string[] = [
   "Cinnamon",
   "Canned Tomatoes",
   "Beans",
+];
+
+export const RECIPE_CATEGORIES: RecipeCategory[] = [
+  "Browse",
+  "Friends",
+  "Kids",
+  "TikTok",
+  "Challenge",
+  "ThreeBites",
+  "Sweets",
 ];

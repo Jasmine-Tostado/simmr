@@ -16,16 +16,7 @@ import { RecipesSelect, ExploreStackParamList, RecipeCategory } from "@/types";
 import Theme from "@/theme";
 import { getCategoryTitle } from "@/utils/recipeCategories";
 import { StoryToneTag } from "./StoryToneTag";
-
-const RECIPE_CATEGORIES: RecipeCategory[] = [
-  "Browse",
-  "Friends",
-  "Kids",
-  "TikTok",
-  "Challenge",
-  "ThreeBites",
-  "Sweets",
-];
+import { RECIPE_CATEGORIES } from "@/utils/constants";
 
 type NavigationProp = StackNavigationProp<ExploreStackParamList>;
 

@@ -27,59 +27,82 @@ export const StoryLog = () => {
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("All");
 
-  // Replace with real Supabase logs later
+  // Local mock logs with your images
   const mockLogs: LogEntry[] = [
     {
       recipe: {
-        id: "1",
+        id: "smoothie",
         title: "Berry Smoothies",
-        image_url:
-          "https://images.unsplash.com/photo-1584270354949-1fbb8b2c8e94",
-        cook_time_minutes: "20",
-        num_servings: "2",
+        image_url: require("@/assets/storylog/smoothie.png"),
+        cook_time_minutes: "10",
+        num_servings: "1",
         story_tone: "Educational",
-        kid_friendly: false,
+        kid_friendly: true,
       } as unknown as RecipesSelect,
-      date: "Apr 9, 2025",
+      date: "Apr 10, 2025",
       tone: "Educational",
     },
     {
       recipe: {
-        id: "2",
-        title: "Creamy Chicken Pasta",
-        image_url:
-          "https://images.unsplash.com/photo-1603079847631-e4c1a6fb3c2d",
-        cook_time_minutes: "20",
-        num_servings: "3",
+        id: "tacos",
+        title: "Fish Tacos",
+        image_url: require("@/assets/storylog/tacos.png"),
+        cook_time_minutes: "25",
+        num_servings: "4",
+        story_tone: "Adventure",
+        kid_friendly: false,
+      } as unknown as RecipesSelect,
+      date: "Nov 1, 2025",
+      tone: "Adventure",
+    },
+    {
+      recipe: {
+        id: "cake",
+        title: "Chocolate Lava Cake",
+        image_url: require("@/assets/storylog/cake.png"),
+        cook_time_minutes: "45",
+        num_servings: "4",
         story_tone: "Cozy",
         kid_friendly: false,
       } as unknown as RecipesSelect,
-      date: "Feb 19, 2025",
+      date: "Jun 16, 2025",
       tone: "Cozy",
     },
     {
       recipe: {
-        id: "3",
-        title: "Chocolate Lava Cake",
-        image_url:
-          "https://images.unsplash.com/photo-1608568790845-fcb91d5c5115",
-        cook_time_minutes: "60",
+        id: "wings",
+        title: "Spicy Wings",
+        image_url: require("@/assets/storylog/wings.png"),
+        cook_time_minutes: "30",
         num_servings: "4",
         story_tone: "Adventure",
-        kid_friendly: true,
+        kid_friendly: false,
       } as unknown as RecipesSelect,
-      date: "Jun 16, 2025",
+      date: "Sep 15, 2025",
       tone: "Adventure",
     },
   ];
 
-  // Filter logic
+  // Filtering rules you requested
   const filteredLogs = mockLogs.filter((entry) => {
     if (activeTab === "All") return true;
-    if (activeTab === "Kids") return entry.recipe.kid_friendly;
-    if (activeTab === "Friends")
-      return parseInt(entry.recipe.num_servings) >= 4;
-    if (activeTab === "Combos") return !entry.recipe.kid_friendly;
+
+    if (activeTab === "Combos") {
+      return entry.recipe.id === "tacos" || entry.recipe.id === "cake";
+    }
+
+    if (activeTab === "Kids") {
+      return entry.recipe.id === "smoothie";
+    }
+
+    if (activeTab === "Friends") {
+      return (
+        entry.recipe.id === "tacos" ||
+        entry.recipe.id === "wings" ||
+        entry.recipe.id === "cake"
+      );
+    }
+
     return true;
   });
 
@@ -113,11 +136,11 @@ export const StoryLog = () => {
           ))}
         </View>
 
-        {/* Log Cards */}
+        {/* Cards */}
         {filteredLogs.map((entry, index) => (
           <View key={index} style={styles.card}>
             <Image
-              source={{ uri: entry.recipe.image_url }}
+              source={entry.recipe.image_url} // IMPORTANT FIX
               style={styles.cardImage}
             />
 
@@ -150,7 +173,7 @@ export const StoryLog = () => {
             {/* Divider */}
             <View style={styles.cardDivider} />
 
-            {/* Cook Again */}
+            {/* Cook Again button */}
             <TouchableOpacity
               style={styles.cookButton}
               onPress={() =>
@@ -257,11 +280,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingVertical: 4,
     marginBottom: 8,
-  },
-
-  chipText: {
-    fontSize: 13,
-    color: "#444",
   },
 
   metaRow: {

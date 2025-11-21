@@ -24,4 +24,8 @@ export type RecipeDifficulty = Database["public"]["Enums"]["RecipeDifficulty"];
 export type Restriction = Database["public"]["Enums"]["Restriction"];
 export type StoryTone = Database["public"]["Enums"]["StoryTone"];
 
+export type StoryLogWithRecipe = StoryLogsSelect & {
+  recipes: RecipesSelect;
+}
+
 export { ExploreStackParamList, FriendsStackParamList };

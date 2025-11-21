@@ -115,24 +115,27 @@ export type Database = {
       }
       story_logs: {
         Row: {
+          date: string
           dish_image_url: string | null
           id: string
           recipe_id: string
-          story_summary: string
+          story_summary: string | null
           user_id: string
         }
         Insert: {
+          date: string
           dish_image_url?: string | null
           id?: string
           recipe_id: string
-          story_summary: string
+          story_summary?: string | null
           user_id: string
         }
         Update: {
+          date?: string
           dish_image_url?: string | null
           id?: string
           recipe_id?: string
-          story_summary?: string
+          story_summary?: string | null
           user_id?: string
         }
         Relationships: [

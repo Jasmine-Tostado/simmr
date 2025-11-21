@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   Modal,
+  Alert,
 } from "react-native";
 import {
   useNavigation,
@@ -17,6 +18,8 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import Theme from "@/theme";
 import { RecipesSelect } from "@/types";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { submitStoryLog } from "@/utils/submitStoryLog";
+import { useAuthContext } from "@/auth/use-auth-context";
 
 type RouteParams = {
   recipe: RecipesSelect;
@@ -32,6 +35,8 @@ export const VoiceSummary = () => {
 
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView | null>(null);
+
+  const { session } = useAuthContext();
 
   // auto-request permission once when this screen mounts
   useEffect(() => {
@@ -62,7 +67,18 @@ export const VoiceSummary = () => {
     openCameraPopup();
   };
 
-  const handleDone = () => {
+  const handleDone = async () => {
+    try {
+      if (!session) {
+        Alert.alert("Error", "Please login to submit a story log.");
+        return;
+      }
+      if (photoUri) {
+        await submitStoryLog(photoUri, recipe.id, session.user.id);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     // Reset the Explore stack to go back to ExploreTabs (initial screen)
     // This prevents users from seeing VoiceAI/VoiceSummary when they navigate back
     // Get the tab navigator (parent of the Explore stack)

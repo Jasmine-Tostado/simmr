@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { RecipesSelect } from "@/types";
 import { StoryToneTag } from "@/components/StoryToneTag";
+import { useAuthContext } from "@/auth/use-auth-context";
+import db from "@/database";
+import { StoryLogWithRecipe } from "@/types";
 
 type LogEntry = {
   recipe: RecipesSelect;
@@ -21,88 +24,51 @@ type LogEntry = {
   tone: string;
 };
 
-const TABS = ["All", "Combos", "Kids", "Friends"];
+const TABS = ["All", "Kids", "Friends"];
 
 export const StoryLog = () => {
+  const [storyLogs, setStoryLogs] = useState<StoryLogWithRecipe[]>([]);
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("All");
+  const { session } = useAuthContext();
 
-  const mockLogs: LogEntry[] = [
-    {
-      recipe: {
-        id: "smoothie",
-        title: "Berry Smoothies",
-        image_url: require("@/assets/storylog/smoothie.png"),
-        cook_time_minutes: "10",
-        num_servings: "1",
-        story_tone: "Educational",
-        kid_friendly: true,
-        ingredients: ["strawberries", "bananas", "milk", "sugar", "ice"],
-      } as unknown as RecipesSelect,
-      date: "Apr 10, 2025",
-      tone: "Educational",
-    },
-    {
-      recipe: {
-        id: "tacos",
-        title: "Fish Tacos",
-        image_url: require("@/assets/storylog/tacos.png"),
-        cook_time_minutes: "25",
-        num_servings: "4",
-        story_tone: "Adventure",
-        kid_friendly: false,
-        ingredients: ["fish", "tortillas", "salsa", "cheese", "lettuce"],
-      } as unknown as RecipesSelect,
-      date: "Nov 1, 2025",
-      tone: "Adventure",
-    },
-    {
-      recipe: {
-        id: "cake",
-        title: "Chocolate Lava Cake",
-        image_url: require("@/assets/storylog/cake.png"),
-        cook_time_minutes: "45",
-        num_servings: "4",
-        story_tone: "Cozy",
-        kid_friendly: false,
-        ingredients: ["chocolate", "cake", "sugar", "egg", "flour"],
-      } as unknown as RecipesSelect,
-      date: "Jun 16, 2025",
-      tone: "Cozy",
-    },
-    {
-      recipe: {
-        id: "wings",
-        title: "Spicy Wings",
-        image_url: require("@/assets/storylog/wings.png"),
-        cook_time_minutes: "30",
-        num_servings: "4",
-        story_tone: "Adventure",
-        kid_friendly: false,
-        ingredients: ["chicken", "wings", "spice", "hot sauce", "bbq sauce"],
-      } as unknown as RecipesSelect,
-      date: "Sep 15, 2025",
-      tone: "Adventure",
-    },
-  ];
+  const fetchStoryLogs = async () => {
+    try {
+      if (!session) {
+        console.error("Failed to fetch story logs: No session found");
+        return;
+      }
+      const { data, error } = await db
+        .from("story_logs")
+        .select("*, recipes(*)")
+        .eq("user_id", session.user.id);
+      if (error) {
+        console.error("Failed to fetch story logs", error);
+        return;
+      }
+      if (data) {
+        const storyLogs = data.map((log: StoryLogWithRecipe) => log);
+        setStoryLogs(storyLogs);
+        console.log("Story logs fetched successfully", storyLogs);
+      }
+    } catch {
+      console.error("Failed to fetch story logs");
+    }
+  };
 
-  const filteredLogs = mockLogs.filter((entry) => {
+  useEffect(() => {
+    fetchStoryLogs();
+  }, [session]);
+
+  const filteredLogs = storyLogs.filter((entry: StoryLogWithRecipe) => {
     if (activeTab === "All") return true;
 
-    if (activeTab === "Combos") {
-      return entry.recipe.id === "tacos" || entry.recipe.id === "cake";
-    }
-
     if (activeTab === "Kids") {
-      return entry.recipe.id === "smoothie";
+      return entry.recipes.kid_friendly;
     }
 
     if (activeTab === "Friends") {
-      return (
-        entry.recipe.id === "tacos" ||
-        entry.recipe.id === "wings" ||
-        entry.recipe.id === "cake"
-      );
+      return entry.recipes.category === "Friends";
     }
 
     return true;
@@ -114,7 +80,6 @@ export const StoryLog = () => {
         {/* Header */}
         <Text style={styles.header}>Story Log</Text>
         <Text style={styles.subHeader}>Your cooking journey</Text>
-
         {/* Tabs */}
         <View style={styles.tabsRow}>
           {TABS.map((tab) => (
@@ -141,16 +106,18 @@ export const StoryLog = () => {
         {/* Cards */}
         {filteredLogs.map((entry, index) => (
           <View key={index} style={styles.card}>
-            <Image
-              source={entry.recipe.image_url} // IMPORTANT FIX
-              style={styles.cardImage}
-            />
+            {entry.dish_image_url && (
+              <Image
+                source={{ uri: entry.dish_image_url }}
+                style={styles.cardImage}
+              />
+            )}
 
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>{entry.recipe.title}</Text>
+              <Text style={styles.cardTitle}>{entry.recipes.title}</Text>
 
               <View style={styles.chip}>
-                <StoryToneTag storyTone={entry.recipe.story_tone} />
+                <StoryToneTag storyTone={entry.recipes.story_tone} />
               </View>
 
               <View style={styles.metaRow}>
@@ -166,7 +133,7 @@ export const StoryLog = () => {
                 <View style={styles.metaItem}>
                   <FontAwesome6 name="clock" size={14} color="#444" />
                   <Text style={styles.metaText}>
-                    {entry.recipe.cook_time_minutes} min
+                    {entry.recipes.cook_time_minutes} min
                   </Text>
                 </View>
               </View>
@@ -188,7 +155,7 @@ export const StoryLog = () => {
                       screen: "Explore",
                       params: {
                         screen: "RecipeDetails",
-                        params: { recipe: entry.recipe },
+                        params: { recipe: entry.recipes },
                       },
                     },
                   })

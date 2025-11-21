@@ -63,7 +63,7 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Story Log"
+        name="StoryLog"
         component={StoryLogScreen}
         options={{
           tabBarIcon: ({ color, size }) => (

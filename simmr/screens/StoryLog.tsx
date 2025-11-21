@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Theme from "@/theme";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { RecipesSelect } from "@/types";
 import { StoryToneTag } from "@/components/StoryToneTag";
 
@@ -37,6 +37,7 @@ export const StoryLog = () => {
         num_servings: "1",
         story_tone: "Educational",
         kid_friendly: true,
+        ingredients: ["strawberries", "bananas", "milk", "sugar", "ice"],
       } as unknown as RecipesSelect,
       date: "Apr 10, 2025",
       tone: "Educational",
@@ -50,6 +51,7 @@ export const StoryLog = () => {
         num_servings: "4",
         story_tone: "Adventure",
         kid_friendly: false,
+        ingredients: ["fish", "tortillas", "salsa", "cheese", "lettuce"],
       } as unknown as RecipesSelect,
       date: "Nov 1, 2025",
       tone: "Adventure",
@@ -63,6 +65,7 @@ export const StoryLog = () => {
         num_servings: "4",
         story_tone: "Cozy",
         kid_friendly: false,
+        ingredients: ["chocolate", "cake", "sugar", "egg", "flour"],
       } as unknown as RecipesSelect,
       date: "Jun 16, 2025",
       tone: "Cozy",
@@ -76,6 +79,7 @@ export const StoryLog = () => {
         num_servings: "4",
         story_tone: "Adventure",
         kid_friendly: false,
+        ingredients: ["chicken", "wings", "spice", "hot sauce", "bbq sauce"],
       } as unknown as RecipesSelect,
       date: "Sep 15, 2025",
       tone: "Adventure",
@@ -174,12 +178,22 @@ export const StoryLog = () => {
             {/* Cook Again button */}
             <TouchableOpacity
               style={styles.cookButton}
-              onPress={() =>
-                (navigation as any).navigate(
-                  "RecipeDetails" as never,
-                  { recipe: entry.recipe } as never
-                )
-              }
+              onPress={() => {
+                // Navigate to Explore tab, then to RecipeDetails
+                // StoryLog is in TabNavigator, so getParent() should return TabNavigator
+                navigation.dispatch(
+                  CommonActions.navigate({
+                    name: "TabNavigator",
+                    params: {
+                      screen: "Explore",
+                      params: {
+                        screen: "RecipeDetails",
+                        params: { recipe: entry.recipe },
+                      },
+                    },
+                  })
+                );
+              }}
             >
               <Text style={styles.cookButtonText}>Cook Again</Text>
             </TouchableOpacity>

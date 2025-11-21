@@ -2,6 +2,7 @@ import db from "@/database";
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import Theme from "@/theme";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 async function onSignOutButtonPress() {
   const { error } = await db.auth.signOut();
@@ -13,27 +14,36 @@ async function onSignOutButtonPress() {
 
 export default function SignOutButton() {
   return (
-    <TouchableOpacity style={styles.button} onPress={onSignOutButtonPress}>
-      <Text style={styles.buttonText}>Sign out</Text>
+    <TouchableOpacity style={styles.logoutButton} onPress={onSignOutButtonPress}>
+      <FontAwesome6
+        name="right-from-bracket"
+        size={18}
+        color="#B3261E"
+      />
+      <Text style={styles.logoutText}>Log Out</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: Theme.colors.primary,
-    padding: 5,
-    borderRadius: 30,
+  logoutButton: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 10,
-    width: "80%",
-    marginTop: 20,
+    gap: 10,
+
+    backgroundColor: "#FDECEC", // light red background
+    paddingVertical: 18,
+    borderRadius: 18,
+
+    marginHorizontal: 16,
+    marginBottom: 40,
   },
-  buttonText: {
-    fontSize: Theme.sizes.headerTitle,
+
+  logoutText: {
+    color: "#B3261E", // red text
+    fontSize: Theme.sizes.largeText,
     fontFamily: "Afacad",
-    fontWeight: "bold",
-    color: Theme.colors.textSecondary,
+    fontWeight: "600",
   },
 });

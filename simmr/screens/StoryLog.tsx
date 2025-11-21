@@ -27,7 +27,6 @@ export const StoryLog = () => {
   const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState("All");
 
-  // Local mock logs with your images
   const mockLogs: LogEntry[] = [
     {
       recipe: {
@@ -83,7 +82,6 @@ export const StoryLog = () => {
     },
   ];
 
-  // Filtering rules you requested
   const filteredLogs = mockLogs.filter((entry) => {
     if (activeTab === "All") return true;
 
